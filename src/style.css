@@ -36,8 +36,8 @@
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  overflow-x: hidden;
+body , html {
+  overflow-x: hidden ;
   background-color: transparent;
 }
 body,
@@ -58,6 +58,7 @@ canvas {
   height: 100vh;
   z-index: 1;
   pointer-events: none;
+  max-width: 100vw !important;
 }
 /* Gsap */
 .pin-spacer {
@@ -77,6 +78,11 @@ canvas {
   overflow: visible;
   width: 100%;
 }
+#smooth-wrapper,
+#smooth-content {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
 
 section {
   display: flex;
@@ -88,6 +94,7 @@ section {
   position: relative;
   pointer-events: none;
   color: var(--text-primary);
+  overflow-x: hidden;
 }
 section h1,
 section h2,
@@ -103,6 +110,7 @@ h1 {
   color: #ecf1fa ;
   opacity: 1;
   font-weight: 900;
+  max-width: 100%;
 }
 section.hero{
   flex-direction: column;
@@ -117,7 +125,8 @@ section.hero p {
 .AbstractImg1 {
   top: 36%;
   left: 520px;
-  max-width: 300px;
+  width: 300px;
+  max-width: 100%;
   filter: blur(1px);
   z-index: -1;
   position: absolute;
@@ -126,15 +135,17 @@ section.hero p {
   position: absolute;
   top: 33%;
   left: 30%;
-  max-width: 650px;
+  width: 650px;
+  max-width: 100%;
 }
 .AbstractImg3 {
   position: absolute;
-    bottom: 30%;
-    right: 31%;
-    max-width: 350px;
-    z-index: 2;
-    filter: blur(1px);
+  bottom: 30%;
+  right: 31%;
+  width: 350px;
+  max-width: 100%;
+  z-index: 2;
+  filter: blur(1px);
 }
 /* hero section header */
 .header{
@@ -212,4 +223,41 @@ section.buy h1 {
   color: #e5ebf7 ;
   opacity: 0.2;
   transform: scale(0.9);
+}
+@media (max-width: 500px) { 
+  .AbstractImg1 {
+    top: 30%;
+    left: -12%;
+ }
+ .AbstractImg2 {
+    top: 42%;
+    left: 5%;
+ } 
+ .AbstractImg3 {
+    top: 60%;
+    left: 0%;
+    width: 250px;
+  }
+ .header{
+   padding: 0 1rem;
+ }
+ section.hero h1{
+  font-size: 4.99rem;
+ }
+ .info-box {
+    width: 65%;
+    margin-right: 0px;
+}
+.info-box p {
+   display: -webkit-box; 
+  -webkit-box-orient: vertical; 
+  -webkit-line-clamp: 7;
+  overflow: hidden; 
+    font-size: 0.9rem;
+    width: 55%;
+}
+ section.buy h1{
+  font-size: 2.4rem;
+  margin-bottom: 100px;
+ }
 }
