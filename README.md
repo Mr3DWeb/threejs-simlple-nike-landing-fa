@@ -12,6 +12,7 @@ An interactive 3D product landing page featuring a Nike shoe model with smooth a
 
 ![Screenshot 1](./screenshots/demo1.png)
 ![Screenshot 2](./screenshots/demo2.png)
+![Screenshot 3](./screenshots/demo3.png)
 
 ---
 
