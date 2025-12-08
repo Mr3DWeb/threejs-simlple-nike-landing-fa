@@ -18,7 +18,7 @@ const renderer = new THREE.WebGLRenderer({
   antialias:true,
   alpha:true
 });
-renderer.setSize(window.innerWidth,innerHeight);
+renderer.setSize(window.innerWidth,window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 2;
@@ -30,7 +30,13 @@ window.addEventListener('resize',() => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth,innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-})
+
+   if (shoes) {
+    const newScale = getResponsiveScale();
+    shoes.scale.set(newScale, newScale, newScale);
+  }
+  ScrollTrigger.refresh();
+});
 
 const ambLight = new THREE.AmbientLight('#ffffff',1)
 scene.add(ambLight)
@@ -52,8 +58,28 @@ function onHover(selector,onEnter,onLeave){
     }
   })
 }
-
-
+//Get Responsive Scale
+function getResponsiveScale(){
+  const width = window.innerWidth;
+    if (width <= 480) {
+    return 2;
+  } else if (width <= 768) {
+    return 2.1; 
+  } else {
+    return 2.5;
+  }
+}
+//shoe responsive position (just x)
+function getResponsivePosition(){
+  const width = window.innerWidth;
+   if (width <= 480) {
+    return -0.1;
+  } else if (width <= 768) {
+    return -0.3; 
+  } else {
+    return -0.6;
+  }
+}
 //----------------------------Three js-------------------------
 //----Gltf Loader
 const gltfLoader = new GLTFLoader();
@@ -63,7 +89,7 @@ gltfLoader.setDRACOLoader(dracoLoader);
 let shoes;
 gltfLoader.load('shoes/shoes.glb', (gltf) => {
   shoes = gltf.scene;
-  const shoesScale = 2.5;
+  const shoesScale = getResponsiveScale();
   shoes.scale.set(shoesScale,shoesScale,shoesScale);
   shoes.rotation.x = 0.5;
   shoes.rotation.y = -0.8;
@@ -145,6 +171,8 @@ window.addEventListener("mousemove",(e)=>{
 });
 //Sec2 + scrollTrigger
 function initScrollAnimation(){
+  const targetPos = getResponsivePosition();
+
   const tlInfoSec = gsap.timeline({
   scrollTrigger:{
     trigger:".product-info",
@@ -158,7 +186,7 @@ function initScrollAnimation(){
     y:2.39,
     z:1.65
   }).to(shoes.position,{
-  x:-0.6
+  x:targetPos
   }).to(".info-box",{
     opacity:1,
   });
