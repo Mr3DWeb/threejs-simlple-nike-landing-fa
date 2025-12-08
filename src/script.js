@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
-import  Lenis from 'lenis';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
 
 
 const scene = new THREE.Scene();
@@ -75,6 +75,14 @@ gltfLoader.load('shoes/shoes.glb', (gltf) => {
 
 
 //----------------------------Gsap-----------------------------
+//Smoth-Scroll
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+const smoother = ScrollSmoother.create({
+  wrapper: "#smooth-wrapper",
+  content: "#smooth-content",
+  smooth: 2,
+  effects: true,
+});
 //--enter animation
 //effect Header
 gsap.from(".header > *",{
@@ -136,7 +144,6 @@ window.addEventListener("mousemove",(e)=>{
   });
 });
 //Sec2 + scrollTrigger
-gsap.registerPlugin(ScrollTrigger);
 function initScrollAnimation(){
   const tlInfoSec = gsap.timeline({
   scrollTrigger:{
@@ -176,20 +183,8 @@ function initScrollAnimation(){
     scale:1,
     yPercent:-100
   })
-
 }
-//---------------------------Lenis-----------------------------
-const lenis = new Lenis({
-  duration:1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  smooth:true
-});
-//sync Gsap & Lenis
-lenis.on('scroll',ScrollTrigger.update);
-gsap.ticker.add((time)=>{
-  lenis.raf(time * 1000);
-});
-gsap.ticker.lagSmoothing(0);
+
 //-------------------------------------------------------------
 const clock = new THREE.Clock();
 function animate(){
